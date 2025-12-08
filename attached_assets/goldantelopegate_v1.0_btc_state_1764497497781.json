@@ -1,0 +1,12 @@
+{
+  "balance": 100.0,
+  "available": 100.0,
+  "in_position": false,
+  "position": null,
+  "last_trade_time": null,
+  "last_1m_dir": null,
+  "one_min_flip_count": 0,
+  "skip_next_signal": false,
+  "trades": [],
+  "telegram_trade_counter": 0
+}

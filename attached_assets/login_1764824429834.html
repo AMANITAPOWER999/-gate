@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gate.io Trading Dashboard - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .login-container {
+            max-width: 500px;
+            width: 100%;
+            padding: 20px;
+        }
+        .card {
+            border: 1px solid #00d4ff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            background: rgba(26, 26, 46, 0.95);
+        }
+        .card-header {
+            background: linear-gradient(90deg, #00d4ff 0%, #0099cc 100%);
+            border-color: #00d4ff;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #00d4ff 0%, #0099cc 100%);
+            border: none;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #0099cc 0%, #00d4ff 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+        }
+        .form-control {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #00d4ff;
+            color: #fff;
+        }
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #00ffff;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+            color: #fff;
+        }
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        .text-warning {
+            color: #ffc107 !important;
+        }
+        .alert {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #ff6b6b;
+            color: #ff6b6b;
+        }
+        .alert-success {
+            border-color: #00d4ff;
+            color: #00d4ff;
+        }
+        .instructions {
+            background: rgba(0, 212, 255, 0.05);
+            border-left: 3px solid #00d4ff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .step {
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        .step strong {
+            color: #00d4ff;
+        }
+        .referral-link {
+            background: rgba(0, 212, 255, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            word-break: break-all;
+            font-size: 0.85rem;
+            color: #00d4ff;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo h1 {
+            color: #00d4ff;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .logo p {
+            color: #0099cc;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1><i class="fas fa-rocket"></i> Goldantelopegate</h1>
+            <p>Gate.io x5-x10 SHORTING BOT</p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-key"></i> API Connection Setup</h5>
+            </div>
+            <div class="card-body">
+                <div id="alert-container"></div>
+
+                <div class="instructions">
+                    <h6 class="text-info mb-3">📋 How to get API Keys:</h6>
+                    <div class="step">
+                        <strong>1.</strong> Sign up via referral link:
+                        <div class="referral-link">
+                            https://www.gate.com/signup/VVRBUVFAUQ?ref_type=103&utm_cmp=PEYEQdSb
+                        </div>
+                    </div>
+                    <div class="step">
+                        <strong>2.</strong> Go to Gate.io account settings → API Management
+                    </div>
+                    <div class="step">
+                        <strong>3.</strong> Create new API key with permissions:
+                        <ul style="margin-top: 5px; margin-bottom: 5px;">
+                            <li><strong>Read:</strong> Account balance, Positions, Trade history</li>
+                            <li><strong>Write:</strong> Place/Cancel orders, Modify leverage</li>
+                        </ul>
+                    </div>
+                    <div class="step">
+                        <strong>4.</strong> Copy API Key and Secret below
+                    </div>
+                </div>
+
+                <form id="api-form">
+                    <div class="mb-3">
+                        <label for="api-key" class="form-label">Gate.io API Key:</label>
+                        <input type="password" class="form-control" id="api-key" placeholder="Your API Key" required>
+                        <small class="form-text text-muted">Your API key is stored securely</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="api-secret" class="form-label">Gate.io API Secret:</label>
+                        <input type="password" class="form-control" id="api-secret" placeholder="Your API Secret" required>
+                        <small class="form-text text-muted">Your secret key is stored securely</small>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="agree-referral" required>
+                        <label class="form-check-label" for="agree-referral">
+                            I confirm I registered via the referral link and will trade from this account
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-plug"></i> Connect API & Enter Dashboard
+                    </button>
+                </form>
+
+                <hr class="my-3">
+
+                <div class="alert alert-info mb-0">
+                    <small>
+                        <strong>⚠️ Security Notice:</strong> Your API credentials are encrypted and only used to communicate with Gate.io. 
+                        Never share your API keys with anyone else. Use API keys from your referral account only.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('api-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const apiKey = document.getElementById('api-key').value;
+            const apiSecret = document.getElementById('api-secret').value;
+            const agreeReferral = document.getElementById('agree-referral').checked;
+
+            if (!agreeReferral) {
+                showAlert('Please confirm you registered via the referral link', 'danger');
+                return;
+            }
+
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        api_key: apiKey, 
+                        api_secret: apiSecret,
+                        referral_verified: agreeReferral
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showAlert('✅ API Connected! Redirecting to dashboard...', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1000);
+                } else {
+                    showAlert(data.error || 'Connection failed. Check your credentials.', 'danger');
+                }
+            } catch (error) {
+                showAlert('Error: ' + error.message, 'danger');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-plug"></i> Connect API & Enter Dashboard';
+            }
+        });
+
+        function showAlert(message, type) {
+            const container = document.getElementById('alert-container');
+            container.innerHTML = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

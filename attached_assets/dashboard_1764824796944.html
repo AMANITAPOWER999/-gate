@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goldantelopegate_v2.0 - Gate.io Trading Dashboard</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <script src="https://unpkg.com/lightweight-charts@4/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card bg-dark border-primary">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Gate.io Logo" class="logo-img me-3">
+                                    <div>
+                                        <h2 class="text-primary mb-0">
+                                            Goldantelopegate_v2.0
+                                        </h2>
+                                        <p class="text-muted mb-0">🚀 GATE.IO Free Strategy X3-10</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <div class="bot-status">
+                                    <span id="bot-status" class="badge bg-danger">STOPPED</span>
+                                </div>
+                                <div class="mt-2 buttons-header-container">
+                                    <button id="start-bot" class="btn btn-header-green btn-sm me-3">
+                                        <i class="fas fa-play"></i> Start Bot
+                                    </button>
+                                    <button id="stop-bot" class="btn btn-header-red btn-sm me-3">
+                                        <i class="fas fa-stop"></i> Stop Bot
+                                    </button>
+                                    <button id="open-long" class="btn btn-header-green btn-sm me-3">
+                                        <i class="fas fa-arrow-up"></i> Open Long
+                                    </button>
+                                    <button id="open-short" class="btn btn-header-red btn-sm me-3">
+                                        <i class="fas fa-arrow-down"></i> Open Short
+                                    </button>
+                                    <button id="close-position" class="btn btn-header-gray btn-sm me-3">
+                                        <i class="fas fa-times"></i> Close Position
+                                    </button>
+                                    <button id="delete-trade" class="btn btn-header-gray btn-sm me-3">
+                                        <i class="fas fa-trash"></i> Delete Last Trade
+                                    </button>
+                                    <button id="reset-balance" class="btn btn-header-gray btn-sm me-3">
+                                        <i class="fas fa-redo"></i> Reset Balance
+                                    </button>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button id="connect-api-btn" class="btn btn-header-blue btn-sm">
+                                            <i class="fas fa-plug"></i> Connect API
+                                        </button>
+                                        <button id="api-status-indicator" class="btn btn-header-blue btn-sm" style="display: none; gap: 0.5rem; cursor: pointer;" title="Click to disconnect API">
+                                            <i class="fas fa-circle" style="color: #10b981;"></i> <span id="api-status-text">Connected</span>
+                                        </button>
+                                        <button id="balance-rebalance-btn" class="btn btn-header-blue btn-sm" style="display: none; gap: 0.5rem; cursor: pointer;" title="Maintain 20% on futures, 80% on spot after each trade">
+                                            <i class="fas fa-circle" id="rebalance-indicator" style="color: #999;"></i> <span id="rebalance-status">Auto 20/80</span>
+                                        </button>
+                                        <button class="btn btn-header-gray btn-sm" style="cursor: default; color: #10b981;">
+                                            <i class="fas fa-users"></i> <span id="online-users">0</span> Online
+                                        </button>
+                                    </div>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <button id="leverage-3x" class="btn btn-header-white leverage-btn" data-leverage="3">
+                                            <i class="fas fa-arrow-up"></i> 3x
+                                        </button>
+                                        <button id="leverage-5x" class="btn btn-header-white leverage-btn" data-leverage="5">
+                                            <i class="fas fa-arrow-up"></i> 5x
+                                        </button>
+                                        <button id="leverage-10x" class="btn btn-header-white leverage-btn active" data-leverage="10">
+                                            <i class="fas fa-arrow-up"></i> 10x
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card bg-dark border-success">
+                            <div class="card-body text-center">
+                                <h5 class="text-success">Balance</h5>
+                                <h3 id="balance" class="text-light">$0.00</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-dark border-info">
+                            <div class="card-body text-center">
+                                <h5 class="text-info">Available</h5>
+                                <h3 id="available" class="text-light">$0.00</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-dark border-warning">
+                            <div class="card-body text-center">
+                                <h5 class="text-warning"><span id="symbol-display">---</span></h5>
+                                <h3 id="current-price" class="text-light">$0.00</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-dark border-primary">
+                            <div class="card-body text-center">
+                                <h5 class="text-primary">Status</h5>
+                                <h3 id="position-status" class="text-light">No Position</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-xl-8">
+                        <div class="card bg-dark border-primary">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="fas fa-crosshairs"></i> Current Position</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="no-position" class="text-center text-muted py-4">
+                                    <i class="fas fa-circle-notch fa-3x mb-3"></i>
+                                    <p>No open position</p>
+                                </div>
+                                <div id="current-position" class="d-none">
+                                    <div class="row mb-3 pb-3 border-bottom">
+                                        <div class="col-md-12">
+                                            <h4 class="text-primary">
+                                                Asset: <span id="pos-symbol" class="text-warning fw-bold">---</span>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="row g-3">
+                                        <div class="col-lg-2">
+                                            <div class="p-2 bg-secondary bg-opacity-10 rounded">
+                                                <strong class="d-block text-muted small">Side</strong>
+                                                <span id="pos-side" class="badge" style="font-size: 1.1em;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div class="p-2 bg-secondary bg-opacity-10 rounded">
+                                                <strong class="d-block text-muted small">Enter Price</strong>
+                                                <span id="pos-entry-price" class="text-light" style="font-size: 1.2em;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div class="p-2 bg-secondary bg-opacity-10 rounded">
+                                                <strong class="d-block text-muted small">Current</strong>
+                                                <span id="pos-entry" class="text-light" style="font-size: 1.2em;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div class="p-2 bg-secondary bg-opacity-10 rounded">
+                                                <strong class="d-block text-muted small">P&L</strong>
+                                                <span id="pos-pnl" class="text-light" style="font-size: 1.2em;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div class="p-2 bg-secondary bg-opacity-10 rounded">
+                                                <strong class="d-block text-muted small">Time</strong>
+                                                <span id="pos-time" class="text-light" style="font-size: 1.1em;"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div class="p-2 bg-secondary bg-opacity-10 rounded">
+                                                <strong class="d-block text-muted small">Notional</strong>
+                                                <span id="pos-notional" class="text-light" style="font-size: 1.2em;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="card bg-dark border-primary">
+                                    <div class="card-header">
+                                        <h5 class="mb-0"><i class="fas fa-history"></i> Trade History</h5>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div id="trades-container" style="max-height: 200px; overflow-y: auto;">
+                                            <div class="text-center text-muted py-4">
+                                                <i class="fas fa-clock fa-2x mb-3"></i>
+                                                <p>No completed trades</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="card bg-dark border-success">
+                                    <div class="card-header">
+                                        <h5 class="mb-0" data-gainers-header><i class="fas fa-rocket"></i> GATE - Loading all pairs</h5>
+                                    </div>
+                                    <div class="card-body" style="max-height: 50vh; overflow-y: auto;">
+                                        <div id="top-gainers-list" class="text-center text-muted py-4">
+                                            <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
+                                            <p>Loading top gainers...</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4">
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card bg-dark border-primary">
+                                    <div class="card-header">
+                                        <h5 class="mb-0"><i class="fas fa-signal"></i> OPEN - Set your signal - CLOSE</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="sar-indicator mb-3" id="sar-1m-container">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <button class="btn btn-sm btn-outline-success level-open-btn" data-level="1m" title="Use 1 min for OPEN">
+                                                        <i class="fas fa-arrow-up"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="text-center flex-grow-1">
+                                                    <span class="fw-bold">Level I - 1 min <span id="sar-1m" class="badge sar-badge">N/A</span></span>
+                                                </div>
+                                                <div>
+                                                    <button class="btn btn-sm btn-outline-danger level-close-btn" data-level="1m" title="Use 1 min for CLOSE">
+                                                        <i class="fas fa-arrow-down"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sar-indicator mb-3" id="sar-5m-container">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <button class="btn btn-sm btn-outline-success level-open-btn" data-level="5m" title="Use 5 min for OPEN">
+                                                        <i class="fas fa-arrow-up"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="text-center flex-grow-1">
+                                                    <span class="fw-bold">Level II - 5 min <span id="sar-5m" class="badge sar-badge">N/A</span></span>
+                                                </div>
+                                                <div>
+                                                    <button class="btn btn-sm btn-outline-danger level-close-btn" data-level="5m" title="Use 5 min for CLOSE">
+                                                        <i class="fas fa-arrow-down"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sar-indicator mb-3" id="sar-15m-container">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <button class="btn btn-sm btn-outline-success level-open-btn" data-level="15m" title="Use 15 min for OPEN">
+                                                        <i class="fas fa-arrow-up"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="text-center flex-grow-1">
+                                                    <span class="fw-bold">Level III - 15 min <span id="sar-15m" class="badge sar-badge">N/A</span></span>
+                                                </div>
+                                                <div>
+                                                    <button class="btn btn-sm btn-outline-danger level-close-btn" data-level="15m" title="Use 15 min for CLOSE">
+                                                        <i class="fas fa-arrow-down"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sar-indicator mb-3" id="sar-30m-container">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <button class="btn btn-sm btn-outline-success level-open-btn" data-level="30m" title="Use 30 min for OPEN">
+                                                        <i class="fas fa-arrow-up"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="text-center flex-grow-1">
+                                                    <span class="fw-bold">Level IV - 30 min <span id="sar-30m" class="badge sar-badge">N/A</span></span>
+                                                </div>
+                                                <div>
+                                                    <button class="btn btn-sm btn-outline-danger level-close-btn" data-level="30m" title="Use 30 min for CLOSE">
+                                                        <i class="fas fa-arrow-down"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sar-indicator" id="sar-1h-container">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <button class="btn btn-sm btn-outline-success level-open-btn" data-level="1h" title="Use 1 hour for OPEN">
+                                                        <i class="fas fa-arrow-up"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="text-center flex-grow-1">
+                                                    <span class="fw-bold">Level V - 60 min <span id="sar-1h" class="badge sar-badge">N/A</span></span>
+                                                </div>
+                                                <div>
+                                                    <button class="btn btn-sm btn-outline-danger level-close-btn" data-level="1h" title="Use 1 hour for CLOSE">
+                                                        <i class="fas fa-arrow-down"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="text-center">
+                                            <div id="signal-status" class="badge bg-secondary signal-badge">NO SIGNAL</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card bg-dark border-primary">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0"><i class="fas fa-chart-candlestick"></i> <span id="chart-symbol">TOP1</span> Chart</h5>
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="btn btn-sm btn-outline-primary tf-btn" data-tf="1m">1m</button>
+                                            <button type="button" class="btn btn-sm btn-outline-primary tf-btn active" data-tf="5m">5m</button>
+                                            <button type="button" class="btn btn-sm btn-outline-primary tf-btn" data-tf="15m">15m</button>
+                                            <button type="button" class="btn btn-sm btn-outline-primary tf-btn" data-tf="30m">30m</button>
+                                            <button type="button" class="btn btn-sm btn-outline-primary tf-btn" data-tf="60m">60m</button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="chart-container" style="height: 400px; width: 100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Connection Modal -->
+    <div id="api-modal" class="api-modal">
+        <div class="api-modal-content">
+            <div class="api-modal-header">
+                <h5><i class="fas fa-key"></i> Connect Gate.io API</h5>
+                <button type="button" class="btn-close btn-close-white" id="close-api-modal"></button>
+            </div>
+            <div class="api-modal-body">
+                <div id="api-alert-container"></div>
+                
+                <div class="api-instructions">
+                    <h6 class="mb-2">📋 How to get API Keys:</h6>
+                    <ol>
+                        <li>Sign up via: <br>
+                            <a href="https://www.gate.com/signup/VVRBUVFAUQ?ref_type=103&utm_cmp=PEYEQdSb" target="_blank" rel="noopener noreferrer" class="text-info">
+                                https://www.gate.com/signup/VVRBUVFAUQ
+                            </a>
+                        </li>
+                        <li>Go to API Management in account settings</li>
+                        <li>Create new API key with trading permissions</li>
+                        <li>Copy and paste below</li>
+                    </ol>
+                </div>
+
+                <form id="api-form-modal">
+                    <div class="mb-2">
+                        <label for="modal-uid" class="form-label">Your Gate.io UID:</label>
+                        <input type="text" class="form-control form-control-sm" id="modal-uid" placeholder="Your UID number" required>
+                        <small class="text-muted">Find your UID in Account Settings → Security</small>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="modal-api-key" class="form-label">API Key:</label>
+                        <input type="password" class="form-control form-control-sm" id="modal-api-key" placeholder="Your API Key" required>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="modal-api-secret" class="form-label">API Secret:</label>
+                        <input type="password" class="form-control form-control-sm" id="modal-api-secret" placeholder="Your API Secret" required>
+                    </div>
+
+                    <div id="referral-check-status" class="alert alert-info alert-sm mb-2" style="display: none;">
+                        <small><i class="fas fa-spinner fa-spin"></i> Verifying referral...</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-sm w-100">
+                        <i class="fas fa-plug"></i> Connect & Verify
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

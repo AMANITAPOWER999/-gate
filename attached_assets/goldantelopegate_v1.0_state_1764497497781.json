@@ -1,0 +1,34 @@
+{
+  "balance": 100.0,
+  "available": 0.06069802731411755,
+  "in_position": true,
+  "position": {
+    "symbol": "PIPPIN_USDT",
+    "side": "long",
+    "entry_price": 0.118548,
+    "size_base": 4215.140785702242,
+    "notional": 499.6965098634294,
+    "margin": 99.93930197268588,
+    "entry_time": "2025-11-30T07:43:36.226994",
+    "close_time_seconds": 688,
+    "trade_number": 29,
+    "top1_entry": {
+      "pair": "PIPPIN_USDT",
+      "price": 0.121771
+    }
+  },
+  "last_trade_time": "2025-11-30T07:43:36.226994",
+  "last_1m_dir": null,
+  "one_min_flip_count": 0,
+  "skip_next_signal": false,
+  "trades": [],
+  "telegram_trade_counter": 29,
+  "top1_entry": {
+    "pair": "PIPPIN_USDT",
+    "price": 0.121771
+  },
+  "current_top1": {
+    "pair": "PIPPIN_USDT",
+    "price": 0.121771
+  }
+}

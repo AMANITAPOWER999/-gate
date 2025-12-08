@@ -1,0 +1,9 @@
+Flask==3.0.0
+ccxt==4.4.92
+pandas==2.3.3
+requests==2.32.4
+python-dotenv==1.0.0
+python-telegram-bot==20.7
+ta==0.10.2
+httpx==0.25.2
+gunicorn==21.2.0

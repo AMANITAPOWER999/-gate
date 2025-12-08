@@ -1,0 +1,222 @@
+{
+  "balance": 115.97168543622747,
+  "available": 115.97168543622747,
+  "in_position": false,
+  "position": null,
+  "last_trade_time": "2025-09-25T12:33:43.458017",
+  "last_1m_dir": "short",
+  "one_min_flip_count": 0,
+  "skip_next_signal": false,
+  "trades": [
+    {
+      "time": "2025-09-25T12:33:42.918707",
+      "side": "short",
+      "entry_price": 3996.01,
+      "exit_price": 3974.51,
+      "size_base": 1.1571549480220022,
+      "pnl": 23.49163055931943,
+      "notional": 4624.002743845402,
+      "duration": "4\u043c 56\u0441",
+      "close_reason": "sar_reversal"
+    },
+    {
+      "time": "2025-09-25T12:28:09.118391",
+      "side": "long",
+      "entry_price": 3999.37,
+      "exit_price": 4001.47,
+      "size_base": 1.1433157548670185,
+      "pnl": 1.029200266057883,
+      "notional": 4572.542730542507,
+      "duration": "4\u043c 51\u0441",
+      "close_reason": "sar_reversal"
+    },
+    {
+      "time": "2025-09-25T12:22:58.375220",
+      "side": "long",
+      "entry_price": 4001.63,
+      "exit_price": 4002.0,
+      "size_base": 1.1546517315788503,
+      "pnl": -0.9589255619073137,
+      "notional": 4620.489008637875,
+      "duration": "1\u043c 50\u0441",
+      "close_reason": "sar_reversal"
+    },
+    {
+      "time": "2025-09-25T12:13:17.800517",
+      "side": "long",
+      "entry_price": 4008.01,
+      "exit_price": 4014.31,
+      "size_base": 1.0838865584664095,
+      "pnl": 5.525216868778397,
+      "notional": 4344.228165198954,
+      "duration": "8\u043c 49\u0441",
+      "close_reason": "sar_reversal"
+    },
+    {
+      "time": "2025-09-25T12:01:22.261862",
+      "side": "short",
+      "entry_price": 4001.06,
+      "exit_price": 4002.67,
+      "size_base": 1.1252890920735656,
+      "pnl": -3.1624201906581417,
+      "notional": 4502.34917473186,
+      "duration": "3\u043c 51\u0441",
+      "close_reason": "sar_reversal"
+    },
+    {
+      "time": "2025-09-25T11:52:02.499749",
+      "side": "short",
+      "entry_price": 4003.94,
+      "exit_price": 3997.48,
+      "size_base": 1.0551851059943713,
+      "pnl": 5.5490264287351465,
+      "notional": 4224.897853295103,
+      "duration": "8\u043c 0\u0441",
+      "close_reason": "sar_reversal"
+    },
+    {
+      "time": "2025-09-25T11:38:05.733474",
+      "side": "short",
+      "entry_price": 4005.46,
+      "exit_price": 4007.28,
+      "size_base": 1.0961295813960528,
+      "pnl": -3.3121067960705854,
+      "notional": 4390.503193098633,
+      "duration": "3\u043c 57\u0441",
+      "close_reason": "sar_reversal"
+    },
+    {
+      "time": "2025-09-25T11:20:05.972821",
+      "side": "short",
+      "entry_price": 3999.78,
+      "exit_price": 4003.48,
+      "size_base": 1.1693093428583805,
+      "pnl": -5.729538605589223,
+      "notional": 4676.980123378094,
+      "duration": "1\u043c 39\u0441",
+      "close_reason": "stop_loss"
+    },
+    {
+      "time": "2025-09-25T11:14:11.431976",
+      "side": "short",
+      "entry_price": 4013.29,
+      "exit_price": 4000.75,
+      "size_base": 1.0211544881492893,
+      "pnl": 11.575820552668652,
+      "notional": 4098.189095744661,
+      "duration": "7\u043c 3\u0441",
+      "close_reason": "random_time"
+    },
+    {
+      "time": "2025-09-25T11:03:11.242768",
+      "side": "short",
+      "entry_price": 4013.22,
+      "exit_price": 4014.0,
+      "size_base": 1.0470532382957078,
+      "pnl": -2.0773180249687915,
+      "notional": 4202.054996993101,
+      "duration": "4\u043c 8\u0441",
+      "close_reason": "sar_reversal"
+    },
+    {
+      "time": "2025-09-25T10:39:33.616077",
+      "side": "short",
+      "entry_price": 4026.84,
+      "exit_price": 4030.93,
+      "size_base": 1.1169922702576291,
+      "pnl": -5.917883131422627,
+      "notional": 4497.949153564232,
+      "duration": "2\u043c 26\u0441",
+      "close_reason": "stop_loss"
+    },
+    {
+      "time": "2025-09-25T10:35:05.613987",
+      "side": "short",
+      "entry_price": 4034.4,
+      "exit_price": 4029.21,
+      "size_base": 1.0624949575952074,
+      "pnl": 4.2283899328425525,
+      "notional": 4286.529656922105,
+      "duration": "7\u043c 18\u0441",
+      "close_reason": "sar_reversal"
+    },
+    {
+      "time": "2025-09-25T10:20:31.921556",
+      "side": "short",
+      "entry_price": 4032.28,
+      "exit_price": 4035.54,
+      "size_base": 1.1254291072580187,
+      "pnl": -5.030312473845184,
+      "notional": 4538.045280614364,
+      "duration": "2\u043c 8\u0441",
+      "close_reason": "stop_loss"
+    },
+    {
+      "time": "2025-09-25T10:15:30.860972",
+      "side": "short",
+      "entry_price": 4031.44,
+      "exit_price": 4032.96,
+      "size_base": 1.1651045180788533,
+      "pnl": -3.1800735549889794,
+      "notional": 4697.048958363813,
+      "duration": "47\u0441",
+      "close_reason": "sar_reversal"
+    },
+    {
+      "time": "2025-09-25T10:02:55.572070",
+      "side": "short",
+      "entry_price": 4025.45,
+      "exit_price": 4024.02,
+      "size_base": 1.1636243133914117,
+      "pnl": 0.258749320447091,
+      "notional": 4684.111492341458,
+      "duration": "2\u043c 32\u0441",
+      "close_reason": "sar_reversal"
+    },
+    {
+      "time": "2025-09-25T09:58:38.666804",
+      "side": "long",
+      "entry_price": 4023.99,
+      "exit_price": 4025.44,
+      "size_base": 1.160545205000746,
+      "pnl": 0.281783857410113,
+      "notional": 4670.022299470952,
+      "duration": "1\u043c 22\u0441",
+      "close_reason": "sar_reversal"
+    },
+    {
+      "time": "2025-09-25T09:41:03.581102",
+      "side": "long",
+      "entry_price": 4042.82,
+      "exit_price": 4044.45,
+      "size_base": 1.1492107997322158,
+      "pnl": 0.47939788195109556,
+      "notional": 4646.052405373397,
+      "duration": "8\u043c 28\u0441",
+      "close_reason": "sar_reversal"
+    },
+    {
+      "time": "2025-09-25T09:28:25.755961",
+      "side": "long",
+      "entry_price": 4041.83,
+      "exit_price": 4038.56,
+      "size_base": 1.2169760070420876,
+      "pnl": -5.45515458339048,
+      "notional": 4918.810134542921,
+      "duration": "3\u043c 23\u0441",
+      "close_reason": "stop_loss"
+    },
+    {
+      "time": "2025-09-25T09:21:11.686801",
+      "side": "long",
+      "entry_price": 4038.86,
+      "exit_price": 4038.76,
+      "size_base": 1.237973091416885,
+      "pnl": -1.6237973091415756,
+      "notional": 5000.0,
+      "duration": "4\u043c 11\u0441",
+      "close_reason": "sar_reversal"
+    }
+  ],
+  "telegram_trade_counter": 19
+}
