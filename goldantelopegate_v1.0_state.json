@@ -1,0 +1,110 @@
+{
+  "balance": 89.06700000000001,
+  "available": 89.06700000000001,
+  "in_position": false,
+  "position": null,
+  "last_trade_time": "2025-12-08T03:14:31.852536",
+  "last_1m_dir": null,
+  "one_min_flip_count": 0,
+  "skip_next_signal": false,
+  "trades": [
+    {
+      "position_id": "87e3bd22-8be0-4fe2-abfb-b30e83744318",
+      "time": "2025-12-08T02:21:24.337242",
+      "symbol": "FHE_USDT",
+      "side": "long",
+      "entry_price": 0.03886,
+      "exit_price": 0.03863,
+      "size_base": 126.0,
+      "pnl": -2.898,
+      "notional": 489.63599999999997,
+      "duration": "7\u043c 33\u0441",
+      "close_reason": "1m_changed_from_open"
+    },
+    {
+      "position_id": "04871f5e-d752-405c-b69a-9c2de2234bba",
+      "time": "2025-12-08T02:34:51.796907",
+      "symbol": "FHE_USDT",
+      "side": "long",
+      "entry_price": 0.03824,
+      "exit_price": 0.03785,
+      "size_base": 124.0,
+      "pnl": -4.836,
+      "notional": 474.17600000000004,
+      "duration": "3\u043c 45\u0441",
+      "close_reason": "1m_changed_from_open"
+    },
+    {
+      "position_id": "631988dd-36da-4571-91af-37b039dd9d95",
+      "time": "2025-12-08T02:57:20.296857",
+      "symbol": "FHE_USDT",
+      "side": "long",
+      "entry_price": 0.03849,
+      "exit_price": 0.03812,
+      "size_base": 117.0,
+      "pnl": -4.329,
+      "notional": 450.333,
+      "duration": "3\u043c 4\u0441",
+      "close_reason": "1m_changed_from_open"
+    },
+    {
+      "position_id": "dbe6760b-c0f2-4613-8cc4-a788a4ea7dab",
+      "time": "2025-12-08T03:20:15.599845",
+      "symbol": "FHE_USDT",
+      "side": "long",
+      "entry_price": 0.03798,
+      "exit_price": 0.03808,
+      "size_base": 113.0,
+      "pnl": 1.13,
+      "notional": 429.174,
+      "duration": "5\u043c 43\u0441",
+      "close_reason": "1m_changed_from_open"
+    }
+  ],
+  "pending_signal_time": null,
+  "pending_signal_direction": null,
+  "pending_signal_levels": null,
+  "rebalance_enabled": false,
+  "api_connected": false,
+  "trading_symbol": "PIPPIN_USDT",
+  "current_top1": {
+    "pair": "FHE_USDT",
+    "price": 0.03798
+  },
+  "trading_mode": "demo",
+  "leverage": 5,
+  "open_levels": [
+    "1m",
+    "30m",
+    "5m"
+  ],
+  "close_levels": [
+    "5m"
+  ],
+  "strategy_config": {
+    "open_levels": [
+      "1m",
+      "1h"
+    ],
+    "close_levels": [
+      "1m"
+    ]
+  },
+  "position_open_direction": "long",
+  "position_open_levels": [
+    "1m",
+    "1h"
+  ],
+  "position_open_levels_directions": {
+    "1m": "long",
+    "1h": "long"
+  },
+  "top1_entry": {},
+  "telegram_trade_counter": 4,
+  "last_tg_open_position_id": "dbe6760b-c0f2-4613-8cc4-a788a4ea7dab",
+  "position_open_price": 0.03798,
+  "position_open_time": 1765163671.3260374,
+  "closing_position_id": null,
+  "last_tg_close_position_id": "dbe6760b-c0f2-4613-8cc4-a788a4ea7dab",
+  "last_position_close_time": 1765164016.2379448
+}
