@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Arbitrage Monitor - Live Alerts</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .status-card {
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .opportunities {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .opportunity {
+            background: rgba(255,255,255,0.2);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #00ff88;
+            animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .profit { font-size: 1.2em; font-weight: bold; color: #00ff88; }
+        .exchanges { color: #ffeb3b; }
+        .time { color: #b0bec5; font-size: 0.9em; }
+        .loading { text-align: center; padding: 50px; }
+        .no-data { text-align: center; padding: 50px; opacity: 0.7; }
+        h1 { font-size: 2.5em; margin-bottom: 10px; }
+        h2 { margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Arbitrage Monitor</h1>
+            <p>Мониторинг арбитражных возможностей в реальном времени</p>
+            <p>4 биржи • 100+ торговых пар • Обновление каждые 5 секунд</p>
+        </div>
+        
+        <div class="status-grid" id="statusGrid">
+            <div class="status-card">
+                <h3>Статус</h3>
+                <p id="botStatus">Загрузка...</p>
+            </div>
+            <div class="status-card">
+                <h3>Биржи</h3>
+                <p id="exchanges">Загрузка...</p>
+            </div>
+            <div class="status-card">
+                <h3>Найдено возможностей</h3>
+                <p id="totalOpportunities">0</p>
+            </div>
+            <div class="status-card">
+                <h3>Последнее обновление</h3>
+                <p id="lastUpdate">Загрузка...</p>
+            </div>
+        </div>
+        
+        <div class="opportunities">
+            <h2>💰 Арбитражные возможности</h2>
+            <div id="opportunitiesList" class="loading">
+                <p>Загрузка данных...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchData() {
+            try {
+                const [opportunities, status] = await Promise.all([
+                    fetch('/api/opportunities').then(r => r.json()),
+                    fetch('/api/status').then(r => r.json())
+                ]);
+                
+                updateStatus(status);
+                updateOpportunities(opportunities);
+            } catch (error) {
+                console.error('Ошибка загрузки:', error);
+                document.getElementById('opportunitiesList').innerHTML = 
+                    '<p class="no-data">❌ Ошибка загрузки данных</p>';
+            }
+        }
+        
+        function updateStatus(status) {
+            document.getElementById('botStatus').textContent = 
+                status.status === 'active' ? '🟢 Активен' : '🔴 Неактивен';
+            document.getElementById('exchanges').textContent = 
+                status.exchanges.join(', ');
+            document.getElementById('lastUpdate').textContent = 
+                new Date(status.last_update).toLocaleTimeString('ru-RU');
+        }
+        
+        function updateOpportunities(data) {
+            const container = document.getElementById('opportunitiesList');
+            const totalElement = document.getElementById('totalOpportunities');
+            
+            totalElement.textContent = data.total;
+            
+            if (data.opportunities.length === 0) {
+                container.innerHTML = '<p class="no-data">📊 Ожидание арбитражных возможностей...</p>';
+                return;
+            }
+            
+            container.innerHTML = data.opportunities.map(opp => `
+                <div class="opportunity">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>${opp.symbol}</strong>
+                            <div class="exchanges">
+                                📈 ${opp.buy_exchange} → ${opp.sell_exchange}
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="profit">${opp.percentage}</div>
+                            <div class="time">${new Date(opp.timestamp).toLocaleTimeString('ru-RU')}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Обновляем данные каждые 2 секунды
+        fetchData();
+        setInterval(fetchData, 2000);
+    </script>
+</body>
+</html>
