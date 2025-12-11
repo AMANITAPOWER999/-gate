@@ -28,7 +28,8 @@ class TelegramNotifier:
         for chat_id in self.chat_ids:
             try:
                 url = f"{self.base_url}/sendMessage"
-                # Конвертируем chat_id в int
+
+                # Convert chat_id
                 try:
                     chat_id_int = int(str(chat_id).strip())
                 except:
@@ -40,8 +41,10 @@ class TelegramNotifier:
                     "parse_mode": "HTML"
                 }
                 
-                response = requests.post(url, json=data, timeout=10)
+                # FIXED: Telegram does NOT allow JSON here
+                response = requests.post(url, data=data, timeout=10)
                 response.raise_for_status()
+
                 logging.info(f"✅ Message sent to {chat_id_int}")
                 success_count += 1
             except Exception as e:
@@ -76,13 +79,13 @@ No open position at the moment.
             else:
                 pnl = (entry_price - current_price) * size
             
-            pnl_emoji = "+" if pnl > 0 else ""
             pnl_sign = "+" if pnl > 0 else ""
             
             margin = position["notional"] / 10
             roi = (pnl / margin) * 100 if margin > 0 else 0
             
             symbol_display = symbol.replace('_USDT', '') if '_USDT' in symbol else symbol
+            
             message = f"""
 <b>CURRENT POSITION #{trade_number}</b>
 <b>{side_text} {symbol_display}/USDT</b> (x10 leverage)
@@ -188,8 +191,7 @@ Please check the bot status and logs.
         return False
     
     def is_owner(self, user_id):
-        """Check if user is the bot owner - now allows all users"""
-        return True
+        return True  # always returns True now
     
     def handle_message(self, message):
         """Handle incoming Telegram message"""
@@ -223,7 +225,7 @@ Please check the bot status and logs.
             return False
     
     def send_welcome_message(self, chat_id, is_new_subscriber):
-        """Send welcome message to new or returning users"""
+        """Send welcome message"""
         if is_new_subscriber:
             message = """
 <b>✅ Gold Antelope Trading Bot - OPEN FOR ALL</b>
@@ -244,19 +246,13 @@ This bot is open for everyone - no restrictions!
 /help - Show all commands
 /subscribe - Subscribe to notifications
 
-<b>Bot Details:</b>
+<b>Details:</b>
 - Exchange: Gate.io Futures
 - Leverage: x5
 - Strategy: 30m Parabolic SAR
-- Positions: SHORT only
-- Mode: Paper Trading (Virtual $100)
-/subscribe - Subscribe to notifications
+- Mode: Paper Trading
 
-<b>Strategy:</b> Parabolic SAR
-<b>Pair:</b> ETH/USDT x500
-<b>Mode:</b> Paper Trading
-
-Let's make some profits!
+Let’s make some profits!
             """.strip()
         else:
             message = """
@@ -269,24 +265,22 @@ Use /help to see available commands.
         self.send_message_to_chat(chat_id, message)
     
     def send_help_message(self, chat_id):
-        """Send help message to all users"""
+        """Send help message"""
         message = """
 <b>Trading Bot Commands</b>
 
-/start - Subscribe to notifications
-/status - Check bot status and balance
-/subscribe - Subscribe to alerts
+/start - Subscribe
+/status - Check status
+/subscribe - Subscribe
 /help - Show this help message
 
-<b>This bot is open for everyone!</b>
-
-<b>Notifications you'll receive:</b>
-- Positions opened/closed
-- P&L updates
+<b>Notifications:</b>
+- Position opened/closed
+- Profit/Loss updates
 - Trading signals
 - Bot status updates
 
-<b>Trading Info:</b>
+<b>Info:</b>
 - Strategy: Parabolic SAR
 - Pair: ETH/USDT
 - Leverage: x500
@@ -295,9 +289,8 @@ Use /help to see available commands.
         self.send_message_to_chat(chat_id, message)
     
     def send_bot_status_on_demand(self, chat_id):
-        """Send bot status when requested by owner"""
+        """Send bot status"""
         try:
-            import requests
             try:
                 response = requests.get('http://localhost:5000/api/get_global_state', timeout=5)
                 if response.status_code == 200:
@@ -315,14 +308,11 @@ Use /help to see available commands.
                 in_position = state.get('in_position', False)
                 current_price = 0
             
-            status_emoji = "ON" if bot_running else "OFF"
-            position_emoji = "OPEN" if in_position else "NONE"
-            
             message = f"""
 <b>Bot Status:</b> {"Running" if bot_running else "Stopped"}
 <b>Balance:</b> ${balance:.2f}
 <b>Position:</b> {"Active" if in_position else "None"}
-<b>ETH Price:</b> ${current_price:.2f}
+<b>Price:</b> ${current_price:.2f}
             """.strip()
             
             self.send_message_to_chat(chat_id, message)
@@ -350,7 +340,7 @@ Use /help to see available commands.
             return False
     
     def get_bot_info(self):
-        """Get bot username for subscription instructions"""
+        """Get bot username"""
         if not self.bot_token:
             return None
         try:
