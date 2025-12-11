@@ -292,7 +292,7 @@ Use /help to see available commands.
         """Send bot status"""
         try:
             try:
-                response = requests.get('http://localhost:5000/api/get_global_state', timeout=5)
+                response = requests.get('http://localhost:8080/api/get_global_state', timeout=5)
                 if response.status_code == 200:
                     state = response.json()
                     bot_running = state.get('bot_running', False)
