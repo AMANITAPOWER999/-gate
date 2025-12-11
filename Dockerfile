@@ -7,6 +7,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 5000
+# Railway указывает порт через $PORT, а не руками!
+EXPOSE $PORT
 
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "--reuse-port", "app:app"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:$PORT", "app:app"]
