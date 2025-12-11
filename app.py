@@ -1895,5 +1895,5 @@ auto_authenticate_api()
 auto_start_bot()
 
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 5000))  # Railway uses PORT env var, default 5000 for Replit
+    port = int(os.getenv('PORT', 8080))  # Railway uses PORT env var, default 5000 for Replit
     app.run(host='0.0.0.0', port=port, debug=False)
