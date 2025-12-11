@@ -5,7 +5,7 @@
     "dockerfile": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "gunicorn -w 4 -b 0.0.0.0:$PORT --reuse-port app:app",
+    "startCommand": "gunicorn -w 4 -b 0.0.0.0:8080 --reuse-port app:app",
     "restartPolicyMaxRetries": 10,
     "healthcheckPath": "/",
     "healthcheckTimeout": 30
