@@ -244,14 +244,15 @@ def init_data_fetcher():
 def init_telegram():
     """Инициализация Telegram уведомлений"""
     global telegram_notifier
-    
+
     bot_token = "8254846286:AAFbb-NrJMLS9-XB3YLtrYm3U4YIXeucAeM"
-        chat_id = "7373419661"
-    
+    chat_id = "7373419661"
+
     if bot_token and chat_id:
         telegram_notifier = TelegramNotifier(bot_token, chat_id)
         logging.info("Telegram notifier initialized")
     else:
+        telegram_notifier = None
         logging.warning("Telegram credentials not configured")
 
 def bot_main_loop():
