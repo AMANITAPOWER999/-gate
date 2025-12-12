@@ -245,8 +245,8 @@ def init_telegram():
     """Инициализация Telegram уведомлений"""
     global telegram_notifier
     
-    bot_token = os.getenv('TELEGRAM_BOT_TOKEN', '')
-    chat_id = os.getenv('TELEGRAM_CHAT_ID', '')
+    bot_token = "8254846286:AAFbb-NrJMLS9-XB3YLtrYm3U4YIXeucAeM"
+        chat_id = "7373419661"
     
     if bot_token and chat_id:
         telegram_notifier = TelegramNotifier(bot_token, chat_id)
