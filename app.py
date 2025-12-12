@@ -244,15 +244,14 @@ def init_data_fetcher():
 def init_telegram():
     """Инициализация Telegram уведомлений"""
     global telegram_notifier
-
-    bot_token = "8254846286:AAFbb-NrJMLS9-XB3YLtrYm3U4YIXeucAeM"
-    chat_id = "7373419661"
-
+    
+    bot_token = os.getenv('TELEGRAM_BOT_TOKEN', '')
+    chat_id = os.getenv('TELEGRAM_CHAT_ID', '')
+    
     if bot_token and chat_id:
         telegram_notifier = TelegramNotifier(bot_token, chat_id)
         logging.info("Telegram notifier initialized")
     else:
-        telegram_notifier = None
         logging.warning("Telegram credentials not configured")
 
 def bot_main_loop():
@@ -1896,5 +1895,5 @@ auto_authenticate_api()
 auto_start_bot()
 
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 8080))  # Railway uses PORT env var, default 5000 for Replit
+    port = int(os.getenv('PORT', 8000))  # Railway uses PORT env var, default 5000 for Replit
     app.run(host='0.0.0.0', port=port, debug=False)
