@@ -4,11 +4,15 @@ import os
 from datetime import datetime
 
 class TelegramNotifier:
-    def __init__(self):
+    # ИСПРАВЛЕНО: Теперь класс принимает bot_token и chat_id
+    def __init__(self, bot_token, chat_id):
         # ----------- YOUR TOKEN + CHAT ID -----------
-        self.bot_token = "8254846286:AAFbb-NrJMLS9-XB3YLtrYm3U4YIXeucAeM"
-        self.chat_ids = ["7373419661"]
-        self.owner_id = "7373419661"
+        # Используем переданные аргументы
+        self.bot_token = bot_token
+        # В app.py передается 'chat_id', а класс использует 'chat_ids' (список), 
+        # поэтому сохраняем переданный ID как единственный элемент списка.
+        self.chat_ids = [str(chat_id).strip()] 
+        self.owner_id = str(chat_id).strip()
         # --------------------------------------------
 
         self.base_url = f"https://api.telegram.org/bot{self.bot_token}"
